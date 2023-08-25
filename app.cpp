@@ -17,7 +17,6 @@ COM1305 - Mini Project
 #include <string>         // Provides string manipulation functions and classes
 
 
-
 using namespace std;      // Use the "std" namespace throughout the program
 
 class student
