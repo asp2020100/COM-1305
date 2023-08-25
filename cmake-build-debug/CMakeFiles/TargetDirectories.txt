@@ -1,3 +1,0 @@
-C:/Users/Root/Documents/GitHub/COM-1305-Mini-Project/cmake-build-debug/CMakeFiles/COM_1305_Mini_Project.dir
-C:/Users/Root/Documents/GitHub/COM-1305-Mini-Project/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Root/Documents/GitHub/COM-1305-Mini-Project/cmake-build-debug/CMakeFiles/rebuild_cache.dir
