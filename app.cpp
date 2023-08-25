@@ -13,7 +13,6 @@ COM1305 - Mini Project
 #include <stdio.h>        // Provides standard input/output functions
 #include <fstream>        // Provides file stream functionality
 #include <stdlib.h>       // Includes functions for various operations
-#include <cstdlib>        // Includes standard C library functions
 #include <string>         // Provides string manipulation functions and classes
 
 
@@ -91,7 +90,7 @@ menustart:
     default:
         cout << "\n\n\t\t\t Invalid Choice... Please Try Again...";
     }
-    getch();  // Wait for a key press
+    _getch();  // Wait for a key press
     goto menustart;  // Go back to the menu
 }
 
