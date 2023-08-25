@@ -61,7 +61,7 @@ menustart:
     cout << "\t\t\t------------------------------------" << endl;
     cout << "\t\t\t    Choose Options:[1/2/3/4/5/6] :  " << endl;
     cout << "\t\t\t------------------------------------" << endl;
-    cout << " Enter Your Choice: ";
+    cout << "\t\t\t    Enter Your Choice: ";
     cin >> choice;
 
     switch (choice)
