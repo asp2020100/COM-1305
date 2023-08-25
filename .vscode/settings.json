@@ -3,5 +3,6 @@
         "iostream": "cpp",
         "string": "cpp",
         "ostream": "cpp"
-    }
+    },
+    "cmake.configureOnOpen": true
 }
