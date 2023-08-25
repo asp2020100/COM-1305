@@ -116,7 +116,7 @@ void student::insert()
     cin >> registration_no;
     cout << "\t\t\tEnter Course: ";
     cin >> course;
-    cout << "\t\t\tEnter Email Id(name@gmail.com): ";
+    cout << "\t\t\tEnter Email Id: ";
     cin >> email_id;
     cout << "\t\t\tEnter Contact No : ";
     cin >> contact_no;
@@ -212,13 +212,13 @@ void student::modify()
         file1.open("record.txt", ios::app | ios::out);
 
         // Read the original file line by line
-        file >> name >> index_no >> course >> email_id >> contact_no >> address;
+        file >> name >> index_no >> registration_no >> course >> email_id >> contact_no >> address;
         while (!file.eof())
         {
             if (indexno != index_no)
             {
                 // Write unchanged student details to the temporary file
-                file1 << " " << name << " " << index_no << " " << course << " " << email_id << " " << contact_no << " " << address << "\n";
+                file1 << " " << name << " " << index_no << " " << registration_no << " " << course << " " << email_id << " " << contact_no << " " << address << "\n";
             }
             else
             {
@@ -232,9 +232,9 @@ void student::modify()
                 cin >> registration_no;
                 cout << "\t\t\tEnter Course: ";
                 cin >> course;
-                cout << "\t\t\tEnter Email Id(name@gmail.com): ";
+                cout << "\t\t\tEnter Email Id: ";
                 cin >> email_id;           
-                cout << "\t\t\tEnter Contact No(9639xxxxxx): ";
+                cout << "\t\t\tEnter Contact No: ";
                 cin >> contact_no;
                 cout << "\t\t\tEnter Address: ";
                 //  getline(cin,address);
@@ -310,7 +310,7 @@ void student::search()
             }
 
             // Read the next set of student details from the file
-            file >> name >> index_no >> course >> email_id >> contact_no >> address;
+            file >> name >> index_no >> registration_no >> course >> email_id >> contact_no >> address;
         }
 
         if (found == 0)  // If the specified index number was not found
