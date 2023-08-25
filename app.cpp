@@ -16,20 +16,10 @@ COM1305 - Mini Project
 #include <cstdlib>        // Includes standard C library functions
 #include <string>         // Provides string manipulation functions and classes
 #include <string_view>    // Provides lightweight string view functionality
-#include <regex>          // Provides regular expression support
+
 
 
 using namespace std;      // Use the "std" namespace throughout the program
-
-// Function to check the validity of an email address
-bool Emailcheck(string email)
-{
-    // Define a regular expression pattern to match valid email addresses
-    const regex pattern("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
-    
-    // Use regex_match to check if the provided email matches the pattern
-    return regex_match(email, pattern);
-}
 
 class student
 {
@@ -127,37 +117,11 @@ void student::insert()
     cin >> registration_no;
     cout << "\t\t\tEnter Course: ";
     cin >> course;
-
-email:
     cout << "\t\t\tEnter Email Id(name@gmail.com): ";
     cin >> email_id;
-
-    // Validate the email using the Emailcheck function
-    if (Emailcheck(email_id))
-    {
-        cout << "\t\t\t Your Email is Valid" << endl;
-    }
-    else
-    {
-        cout << "\t\t\t Your Email is Invalid" << endl;
-        goto email;  // If email is invalid, prompt again
-    }
-
-/* contact: */
-
     cout << "\t\t\tEnter Contact No : ";
     cin >> contact_no;
-
-/*
-    // Validate the contact number
-    if (contact_no < 1111111111 || contact_no > 9999999999)
-    {
-        cout << "\t\t\t Please Enter Only 10 Digits..." << endl;
-        goto contact;  // If contact number is invalid, prompt again
-    }
-*/
     cout << "\t\t\tEnter Address: ";
-    /// getline(cin,address);
     cin >> address;
 
     // Open the file in append mode and write the student details
@@ -269,25 +233,10 @@ void student::modify()
                 cin >> registration_no;
                 cout << "\t\t\tEnter Course: ";
                 cin >> course;
-
-            email:
                 cout << "\t\t\tEnter Email Id(name@gmail.com): ";
-                cin >> email_id;
-                if (Emailcheck(email_id))
-                {
-                    cout << "\t\t\t Your Email-Id is Valid" << endl;
-                }
-                else
-                {
-                    cout << "\t\t\t Your Email-Id is Invalid" << endl;
-                    goto email;
-                }
-
-            
+                cin >> email_id;           
                 cout << "\t\t\tEnter Contact No(9639xxxxxx): ";
                 cin >> contact_no;
-            
-
                 cout << "\t\t\tEnter Address: ";
                 //  getline(cin,address);
                 cin >> address;
