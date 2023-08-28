@@ -14,7 +14,7 @@ class student
 private:
     
     string name, index_no, registration_no, course, address, email_id;
-    long long int contact_no;
+    long int contact_no;
 
 public:
     
@@ -381,3 +381,4 @@ int main()
     s.menu(); 
     return 0;       
 }
+
