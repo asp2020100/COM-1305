@@ -1,15 +1,23 @@
-/* ---------------------- Preprocessor Declaration ----------------------- */
-#include <windows.h>//Preprocessor to set console properties 
-#include <iostream>//Preprocessor to get standard input/output
-#include <conio.h>//Preprocessor to handle functionalities of the console
-#include <string>//Preprocessor to manage string inputs
-#include <fstream>//Preprocessor for file handling methods
-#include <regex>//Preprocessor to handle regular expressions 
-#include <iomanip>//Preprocessor to manipulate input output
-/* ------------------------------ E N D ---------------------------------- */
+/*  
+Student Management System With File Handing In C++
+R.M.Y.P.Rathnayake 
+ASP/19/20/100
+4840
+COM1305 - Mini Project
+2023/08/25
+*/
+
+// Include necessary libraries for the program
+#include <windows.h>        //Preprocessor to set console properties 
+#include <iostream>         //Preprocessor to get standard input/output
+#include <conio.h>          //Preprocessor to handle functionalities of the console
+#include <string>           //Preprocessor to manage string inputs
+#include <fstream>          //Preprocessor for file handling methods
+#include <regex>            //Preprocessor to handle regular expressions 
+#include <iomanip>          //Preprocessor to manipulate input output
 
 
-using namespace std;//using standard formats
+using namespace std;        //using standard formats
 
 //global variables
 char un[20], pw[20];
@@ -17,10 +25,10 @@ int lgStat = 0;//Variable to Store Login Status
 char login[20];//LOGGED USERNAME
 
 
-void Menu();//Function Prototypes
+void Menu(); // Project Menu function definition
 
 
-/* ---------------------- Regular Expression Function - Validate input ----------------------- */
+// Validate input 
 bool validate(string expressions, char tests[]) {
 	regex ry(expressions);
 	cmatch result;
@@ -32,10 +40,10 @@ bool validate(string expressions, char tests[]) {
 		return false;
 	}
 }
-/* ------------------------------ E N D ---------------------------------- */
 
 
-#pragma  region structures 
+
+
 //Create Stucture student to store data
 struct users {
 	char username[20], password[20];
@@ -43,41 +51,50 @@ struct users {
 
 //Create Stucture student to store data
 struct student {
+    unsigned int sid, age;           // Student ID and age
+    char FName[20], SName[30];       // First name and surname (up to 20 and 30 characters respectively)
+    char course[20];                 // Course (up to 20 characters)
+    char address[100];               // Address (up to 100 characters)
+    char phoneNo[11];                // Phone number (up to 11 characters)
 
-	unsigned int sid, age;
-	char FName[20], SName[30], course[20], address[100], phoneNo[11];
 
-	void clear() {
-		//Flush data by reinitillizing variables
-		sid, age;
-		FName[20], SName[20], course[20], address[100], phoneNo[11];
+    // Member function to clear the struct's data
+    void clear() {
+        // Reset the values of the struct's members
+        sid = 0;
+        age = 0;
+        FName[0] = '\0';
+        SName[0] = '\0';
+        course[0] = '\0';
+        address[0] = '\0';
+        phoneNo[0] = '\0';
 	}
 };
 
-#pragma endregion structures
+
 
 student stdobject;//Global Variable  for the program to access student
 
 
 
-#pragma region login
 
-/* ---------------------- Heading Function - Displays Heading ----------------------- */
+
+// Heading Function
 void heading() {
 	if (lgStat == 2)cout << setw(20) << "\n                       Logged in as " << login;
 	cout << setw(20) << "\n-------------------------------------------------------------------";
-	cout << setw(20) << "\n                 University Student Management System               ";
+	cout << setw(20) << "\n                 STUDENT MANAGEMENT SYSTEM BY 4840                 ";
 	cout << setw(20) << "\n-------------------------------------------------------------------\n";
 }
-/* ------------------------------ E N D ---------------------------------- */
 
 
-/* ---------------------- Password Function - Displays as * ----------------------- */
+
+//  Password Function 
 void getPassword(string msg) {
 	char ch = '0';
 
 	cout << setw(5) << msg + "Enter Password: ";
-	/* ---------------------- Convert paswword from text to * ----------------------- */
+	//Convert paswword from text to asterisk
 	//Check size of characters increment on loop
 	for (int x = 0; x <= sizeof(pw); ++x) { 
 
@@ -108,7 +125,7 @@ void getPassword(string msg) {
 
 }
 
-/* ---------------------- login input output Function - get credentials ----------------------- */
+// login input output Function
 void LoginIO(string msg) {
 	system("cls");//Clear Console
 	heading();// Displays Heading 
@@ -121,9 +138,9 @@ void LoginIO(string msg) {
 	getPassword("");// Call get password function
 
 }
-/* ------------------------------ E N D ---------------------------------- */
 
-/* ---------------------- login Function - set login status ,grant acces to the system ----------------------- */
+
+// login Function
 void loginFunc()
 {
 	lgStat = 0;//login status
@@ -143,7 +160,7 @@ void loginFunc()
 			heading();// Displays Heading
 			LoginIO("");//Call Login input output function
 
-			file.open("users.dat", ios::binary);
+			file.open("users.txt", ios::out);  // Open for writing (text mode)
 			while (file.read((char*)&object, sizeof(object))) {
 
 				//Compare characters
@@ -168,7 +185,7 @@ void loginFunc()
 			cout << setw(20) << "\n                                  Login                              ";
 			cout << setw(20) << "\n-------------------------------------------------------------------\n";
 			cout << setw(20) << "\n Access Denied....... Incorrect Username or Password...................\n";
-			cout << setw(20) << "\nPress 'Y' to re try Login or any other key to go to Main Menu: ";
+			cout << setw(20) << "\n Press 'Y' to re try Login or any other key to go to Main Menu: ";
 
 			char ch;
 			cin >> ch;
@@ -176,7 +193,7 @@ void loginFunc()
 			if (ch == 'y' || ch == 'Y') {
 				LoginIO("Re ");//call the login input ouput function
 
-				file.open("users.dat", ios::binary);
+				file.open("users.txt", ios::out);  // Open for writing (text mode)
 				while (file.read((char*)&object, sizeof(object))) {
 					//Compare characters
 					if ((strcmp(un, object.username) == 0 && strcmp(pw, object.password) == 0)) {
@@ -210,9 +227,9 @@ void loginFunc()
 		Menu();//Call Menu Function
 	}
 }
-/* ------------------------------ E N D ---------------------------------- */
 
-/* ---------------------- Add User function - Add new users to the system ----------------------- */
+
+// Add User function
 void adduser()
 {
 	system("cls");//Clear Console
@@ -222,7 +239,7 @@ void adduser()
 	cout << setw(20) << "\n-------------------------------------------------------------------\n";
 	users object;
 	ofstream file;
-	file.open("users.dat", ios::binary | ios::app);
+	file.open("users.txt", ios::app | ios::out);
 
 	while (true) {
 		char temp[20];
@@ -234,7 +251,7 @@ void adduser()
 			break;
 		}
 		else {
-			cout << left << "\t----------- Invalid value.. Please re enter\n\n";
+			cout << left << "\t----------- Invalid value.. Please re-enter\n\n";
 		}
 
 	}
@@ -261,9 +278,9 @@ void adduser()
 	Menu();//Call Menu Function
 
 }
-/* ------------------------------ E N D ---------------------------------- */
 
-/* ---------------------- Delete User function - delete users from the system ----------------------- */
+
+// Delete User function
 void deleteUser()
 {
 	char opt = 0;
@@ -276,25 +293,25 @@ void deleteUser()
 		while (true) {
 			system("cls");//Clear Console
 
-			if (firstTime == true) {
-				cout << left << "\nInvalid option selected ...... Please re select in order to continue .......\n";
-			}
+            if (!firstTime) {}
+            else {
+                cout << left << "\nInvalid option selected ...... Please re select in order to continue .......\n";
+            }
 
-			heading();// Displays Heading
-			cout << setw(20) << "\n                     Delete Student Details Menu                     ";
-			cout << setw(20) << "\n-------------------------------------------------------------------\n";
+            heading();// Displays Heading
+            cout << setw(20) << "\n                     Delete Student Details Menu                     ";
+            cout << setw(20) << "\n-------------------------------------------------------------------\n";
 
-			cout << left << "1. Delete user\n";
-			cout << left << "\n2. Return to Main Menu\n";
+            cout << left << "1. Delete user\n";
+            cout << left << "\n2. Return to Main Menu\n";
 
-			cout << setw(20) << "\n------------------------------------\n";
+            cout << setw(20) << "\n------------------------------------\n";
 
-			cout << setw(20) << "\n *To Continue Please Select an Option : ";
-			cin >> opt; 
+            cout << setw(20) << "\n *To Continue Please Select an Option : ";
+            cin >> opt;
 
-			firstTime = true;
-			if (opt != '1' || opt != '2') break;
-		}
+            firstTime = true;
+        }
 
 		system("cls");//Clear Console
 		heading();// Displays Heading
@@ -318,10 +335,10 @@ void deleteUser()
 
 
 		ifstream file;
-		file.open("users.dat", ios::binary);
+		file.open("users.txt", ios::out);  // Open for writing (text mode)
 
 		ofstream filet;
-		filet.open("userst.tmp", ios::binary);
+		filet.open("userst.txt", ios::app | ios::out);  // Open for writing (text mode)
 
 		while (file.read((char*)&userObject, sizeof(userObject))) {
 			if (strcmp(searchChars, userObject.username) == 0) {
@@ -347,33 +364,32 @@ void deleteUser()
 		file.close();
 		filet.close();
 
-		remove("users.dat");
-		rename("userst.tmp", "users.dat");
+		remove("users.txt");
+		rename("userst.txt", "users.txt");
 
-		if (result == true) {
+        if (!result) {
+            cout << setw(20) << "\n-------------------No records have being deleted---------------------------\n";
 
-			cout << setw(20) << "\nRecord has been deleted";
+            cout << setw(20) << "\n Press any key to continue.........";
+            _getch();
+        } else {
 
-			cout << setw(20) << "\nPress any key to continue.........";
-			_getch();
-			system("cls");//Clear Console
-			Menu();//Call Menu Function
-			break;
+            cout << setw(20) << "\nRecord has been deleted";
 
-		}
-		else {
-			cout << setw(20) << "\n-------------------No records have being deleted---------------------------\n";
+            cout << setw(20) << "\nPress any key to continue.........";
+            _getch();
+            system("cls");//Clear Console
+            Menu();//Call Menu Function
+            break;
 
-			cout << setw(20) << "\n Press any key to continue.........";
-			_getch();
-		}
-	}
+        }
+    }
 }
-/* ------------------------------ E N D ---------------------------------- */
-#pragma endregion login
 
-#pragma region students
-/* ---------------------- Display function - Display Student deails ----------------------- */
+
+
+
+//Display function
 void displayStudent()
 {
 	if (stdobject.age != NULL) {
@@ -390,10 +406,10 @@ void displayStudent()
 	}
 
 }
-/* ------------------------------ E N D ---------------------------------- */
 
 
-/* ----------------- Student Details function -  push student data after validate to the structure---------------- */
+
+// Student Details function
 void stdDetailsToObject(char x) {
 	//save student id to object
 	if (x == 'a') {
@@ -532,10 +548,10 @@ void stdDetailsToObject(char x) {
 		}
 	}
 }
-/* ------------------------------ E N D ---------------------------------- */
 
 
-/* ---------------------- Student Registration function - Register Students ----------------------- */
+//Student Registration function
+
 void stdRegistration()
 {
 	system("cls");//Clear Console
@@ -545,7 +561,7 @@ void stdRegistration()
 	cout << setw(20) << "\n-------------------------------------------------------------------\n";
 	stdobject.clear();//clear object
 	ofstream file;
-	file.open("stdDetails.dat", ios::binary | ios::app);
+	file.open("stdDetails.txt", ios::app | ios::out);
 	stdDetailsToObject('a');//call student details to object function
 
 	file.write((char*)&stdobject, sizeof(stdobject));
@@ -560,9 +576,9 @@ void stdRegistration()
 	Menu();//Call Menu Function
 
 }
-/* ------------------------------ E N D ---------------------------------- */
 
-/* ---------------------- Search function - Search Students Details----------------------- */
+
+// Search function
 void stdSearch() {
 	char opt = 0;
 
@@ -573,25 +589,26 @@ void stdSearch() {
 		while (true) {
 			system("cls");//Clear Console
 
-			if (firstTime == true) {
-				cout << left << "Invalid option selected ...... Please re select in order to continue .......\n";
-			}
-			heading();// Displays Heading
-			cout << setw(20) << "\n                          Student Search Menu                        ";
-			cout << setw(20) << "\n-------------------------------------------------------------------\n";
-			cout << left << "1. Search Student by ID\n";
-			cout << left << "2. Search Student by First Name\n";
-			cout << left << "3. Search Student By Course\n";
-			cout << left << "4. Return to Main Menu\n";
+            if (!firstTime) {}
+            else {
+                cout << left << "Invalid option selected ...... Please re select in order to continue .......\n";
+            }
+            heading();// Displays Heading
+            cout << setw(20) << "\n                          Student Search Menu                        ";
+            cout << setw(20) << "\n-------------------------------------------------------------------\n";
+            cout << left << "1. Search Student by ID\n";
+            cout << left << "2. Search Student by First Name\n";
+            cout << left << "3. Search Student By Course\n";
+            cout << left << "4. Return to Main Menu\n";
 
-			cout << setw(20) << "\n------------------------------------\n";
+            cout << setw(20) << "\n------------------------------------\n";
 
-			cout << setw(20) << "\n *To Continue Please Select an Option : ";
-			cin >> opt;
+            cout << setw(20) << "\n *To Continue Please Select an Option : ";
+            cin >> opt;
 
-			firstTime = true;
-			if (opt == '1' || opt == '2' || opt == '3' || opt == '4') break;
-		}
+            firstTime = true;
+            if (opt == '1' || opt == '2' || opt == '3' || opt == '4') break;
+        }
 
 		system("cls");//Clear Console
 		heading();// Displays Heading
@@ -618,7 +635,7 @@ void stdSearch() {
 
 		cin >> searchChars;
 		ifstream file;
-		file.open("stdDetails.dat", ios::binary);
+		file.open("stdDetails.txt", ios::app | ios::out);
 
 		while (file.read((char*)&stdobject, sizeof(stdobject))) {
 			//search using student id
@@ -626,7 +643,7 @@ void stdSearch() {
 				int num = 0;
 				sscanf_s(searchChars, "%d", &num);
 
-				if ((num == stdobject.sid)) {
+				if ((num = stdobject.sid)) {
 
 					result = true;
 					break;
@@ -664,23 +681,22 @@ void stdSearch() {
 
 		file.close();
 
-		if (result == true) {
-			displayStudent();//call display student function
-			cout << setw(20) << "\nPress any key to continue.........";
-			_getch();
-		}
-		else {
-			cout << setw(20) << "\n-------------------Could not find the Searched record ---------------------------\n";
+        if (!result) {
+            cout << setw(20) << "\n-------------------Could not find the Searched record ---------------------------\n";
 
-			cout << setw(20) << "\nPress any key to continue.........";
-			_getch();
+            cout << setw(20) << "\nPress any key to continue.........";
+            _getch();
 
-		}
-	}
+        } else {
+            displayStudent();//call display student function
+            cout << setw(20) << "\nPress any key to continue.........";
+            _getch();
+        }
+    }
 }
-/* ------------------------------ E N D ---------------------------------- */
 
-/* ---------------------- Update function - Update Students Details ----------------------- */
+
+// Update function
 void stdUpdate()
 {
 	char opt = 0;
@@ -715,8 +731,11 @@ void stdUpdate()
 			cin >> opt;
 
 			firstTime = true;
-			if (opt != '1' || opt != '2' || opt != '3' || opt != '4' || opt != '5' || opt != '6' || opt != '7' || opt != '8') break;
-		}
+            if (opt == '1' && opt == '2' && opt == '3' && opt == '4' && opt == '5' && opt == '6' && opt == '7' &&
+                opt == '8')
+                continue;
+            break;
+        }
 
 		system("cls");//Clear Console
 		heading();// Displays Heading
@@ -761,10 +780,10 @@ void stdUpdate()
 		sscanf_s(searchChars, "%d", &num);
 
 		ifstream file;
-		file.open("stdDetails.dat", ios::binary);
+		file.open("stdDetails.txt", ios::app | ios::out);
 
 		ofstream filet;
-		filet.open("stdDetailst.tmp", ios::binary);
+		filet.open("stdDetailst.txt", ios::app | ios::out);
 
 		while (file.read((char*)&stdobject, sizeof(stdobject))) {
 			if (num == stdobject.sid) {
@@ -780,11 +799,11 @@ void stdUpdate()
 		file.close();
 		filet.close();
 
-		remove("stdDetails.dat");
-		rename("stdDetailst.tmp", "stdDetails.dat");//copy and paste updated data
+		remove("stdDetails.txt");
+		rename("stdDetailst.txt", "stdDetails.txt");//copy and paste updated data
 
 		if (result == true) {
-			file.open("stdDetails.dat", ios::binary);
+			file.open("stdDetails.txt", ios::app | ios::out);
 
 			while (file.read((char*)&stdobject, sizeof(stdobject))) {
 				if (num == stdobject.sid) {
@@ -804,9 +823,9 @@ void stdUpdate()
 		}
 	}
 }
-/* ------------------------------ E N D ---------------------------------- */
 
-/* ---------------------- Delete Students function - Delete Students Details ----------------------- */
+
+//  Delete Students function
 void stdDelete()
 {
 	char opt = 0;
@@ -835,7 +854,7 @@ void stdDelete()
 			cin >> opt;
 
 			firstTime = true;
-			if (opt != '1' || opt != '2') break;
+            if (opt != '1' || opt != '2') { break; }
 		}
 
 		system("cls");//Clear Console
@@ -863,10 +882,10 @@ void stdDelete()
 		sscanf_s(searchChars, "%d", &num);
 
 		ifstream file;
-		file.open("stdDetails.dat", ios::binary);
+		file.open("stdDetails.txt", ios::in | ios::app | ios::out);
 
 		ofstream filet;
-		filet.open("stdDetailst.tmp", ios::binary);
+		filet.open("stdDetailst.txt", ios::in | ios::app | ios::out);
 
 		while (file.read((char*)&stdobject, sizeof(stdobject))) {
 			if (num == stdobject.sid) {
@@ -893,8 +912,8 @@ void stdDelete()
 		file.close();
 		filet.close();
 
-		remove("stdDetails.dat");
-		rename("stdDetailst.tmp", "stdDetails.dat");//copy and pasting required data
+		remove("stdDetails.txt");
+		rename("stdDetailst.txt", "stdDetails.txt");//copy and pasting required data
 
 		if (result == true) {
 
@@ -912,11 +931,12 @@ void stdDelete()
 		}
 	}
 }
-/* ------------------------------ E N D ---------------------------------- */
-#pragma endregion students
 
-#pragma region menus
-/* ---------------------- Help function - Help on the system ----------------------- */
+
+
+
+
+// Help function
 void help() {
 
 	system("cls");//Clear Console
@@ -1038,9 +1058,9 @@ void help() {
 
 
 }
-/* ------------------------------ E N D ---------------------------------- */
 
-/* ---------------------- Menu function - To navigate in the system on the system ----------------------- */
+
+// Menu function
 void Menu()
 {
 	while (true) {
@@ -1144,16 +1164,16 @@ void Menu()
 	}
 
 }
-/* ------------------------------ E N D ---------------------------------- */
-#pragma endregion menus
 
-/* ---------------------- Main function ----------------------- */
+
+
+// Main function 
 int main() {
 	system("mode 650");//Set console size
-	SetConsoleTitle(TEXT ("University Student Management System"));// Set console window's title
+	SetConsoleTitle(TEXT ("STUDENT MANAGEMENT SYSTEM BY 4840"));// Set console window's title
 	system("COLOR F0");//Sets the background & text color
 	Menu();//Call Menu Function
 
 	system("pause");//to pause the console window
 }
-/* ------------------------------ E N D ---------------------------------- */
+// END.
